@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "jobs")
-public class Jobs {
+public class Job {
     @Id
     @Column(name = "job_id")
     private String jobid;
