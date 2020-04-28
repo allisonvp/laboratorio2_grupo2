@@ -17,8 +17,18 @@ public class DepartmentEntity {
     private String departmentname;
     @Column(name = "manager_id")
     private String managerid;
-    @Column(name="department_short_name")
+    @Column(name="department_short_name", nullable = false)
     private String departmentshortname;
+    @Column(name = "location_id")
+    private String locationid;
+
+    public String getLocationid() {
+        return locationid;
+    }
+
+    public void setLocationid(String locationid) {
+        this.locationid = locationid;
+    }
 
     public String getDepartmentshortname() {
         return departmentshortname;
