@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Index</title>
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    </head>
+    <body class="container">
+        <h2>Gestión HR-SW2</h2>
+        <a th:href="@{'/jobs/lista'}">Gestionar Trabajos</a><b />
+        <a th:href="@{'/department/lista'}">Gestionar departamentos</a><br />
+        <a th:href="@{'/employee/lista'}">Gestionar Empleados</a><br />
+    </body>
+</html>
