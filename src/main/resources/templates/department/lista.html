@@ -33,7 +33,7 @@
             <tr th:each="d, i: ${lista}">
                 <td th:text="${i.index + 1}"></td>
                 <td th:text="${d.departmentname}"></td>
-                <td th:text="${emp.manager_id==null}? 'Sin jefe' : ${d.manager_id}"></td>
+                <td th:text="${d.managerid==null}? 'Sin jefe' : ${d.managerid}"></td>
                 <td th:text="${d.locationid}"></td>
                 <!--td><a th:href="@{|/shipper/editar'?'id=${shipper.shipperid}|}">Editar</a></td=-->
                 <td><a th:href="@{'/department/editar?id='+${d.departmentid}}"class="btn btn-primary">Editar</a></td>

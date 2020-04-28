@@ -1,10 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        
-    </body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Departments</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body class="container">
+
+<div th:replace="fragments/fragmento.html :: barraSuperior(actual='department')"></div>
+
+<h2>Nuevo Departamento</h2>
+<form method="post" th:action="@{'/department/guardar'}">
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input name="nombre" type="text" class="form-control" id="nombre">
+    </div>
+    <div class="form-group">
+        <select class="form-control" name="manager" id="manager">
+            <option th:each="manager : ${listaSuppliers}"
+                    th:value="${supplier.id}"
+                    th:text="${supplier.companyname}"
+                    th:selected="${supplier.id == product.supplier.id}">
+            </option>>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="ubicacion">Precio</label>
+        <input name="ubicacion" type="text" class="form-control" id="ubicacion">
+    </div>
+    <div class="form-group">
+        <label for="nombrecorto">Peso</label>
+        <input name="nombrecorto" type="text" class="form-control" id="nombrecorto">
+    </div>
+       <a th:href="@{'/Producto/listar'}" class="btn btn-danger">Cancelar</a>
+    <button type="submit" class="btn btn-primary">Crear Departamento</button>
+</form>
+
+
+<a th:if="${searchField!=null}" class="btn btn-danger mt-4 mb-4" th:href="@{/department/listar}">Volver a mostrar la lista completa</a>
+<div th:if="${msg!=null}" th:text="${msg}" class="alert alert-success" role="alert"></div>
+
+
+</body>
 </html>
