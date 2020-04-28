@@ -29,7 +29,22 @@ public class DepartmentController {
         model.addAttribute("lista", listaDepartments);
         return "department/lista";
     }
+    @PostMapping(value = "/guardar")
+    public String guardarDepartment(DepartmentEntity department, RedirectAttributes attr, @RequestParam("nombre") String nombre, @RequestParam("jefe")
+            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto) {
+        department.setDepartmentname(nombre);
 
+        if (department.getDepartmentid() == 0) {
+            List<DepartmentEntity> list = departmentRepository.findAll(Sort.by("departmentid").descending());
+            DepartmentEntity ultimoDepartment = list.get(0);
+            department.setDepartmentid(ultimoDepartment.getDepartmentid() + 10);
+            attr.addFlashAttribute("msg", "Departamento creado exitosamente");
+        } else {
+            attr.addFlashAttribute("msg", "Departamento " + department.getDepartmentname() + " actualizado exitosamente");
+        }
+        departmentRepository.save(department);
+        return "redirect:/department";
+    }
     @PostMapping(value = "buscarDepartamento")
     public String buscarTransportista(@RequestParam("searchField") String searchField,
                                       Model model){
