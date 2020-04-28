@@ -3,6 +3,7 @@ package com.example.laboratorio2_grupo2.Entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
