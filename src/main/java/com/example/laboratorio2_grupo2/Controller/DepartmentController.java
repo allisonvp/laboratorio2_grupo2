@@ -1,7 +1,9 @@
 package com.example.laboratorio2_grupo2.Controller;
 
 import com.example.laboratorio2_grupo2.Entity.DepartmentEntity;
+import com.example.laboratorio2_grupo2.Entity.EmployeeEntity;
 import com.example.laboratorio2_grupo2.Repository.DepartmentRepository;
+import com.example.laboratorio2_grupo2.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -31,16 +33,22 @@ public class DepartmentController {
     }
 
     @GetMapping(value = "/nuevo")
-    public String nuevoDepartment() {
+    public String nuevoDepartment(Model model) {
+        EmployeeRepository employeeRepository = null;
+        List<EmployeeEntity> listaemployee = employeeRepository.findAll();
+        model.addAttribute("listaemployee",listaemployee);
+
 
         return "department/crear";
     }
 
     @PostMapping(value = "/guardar")
-    public String guardarDepartment(DepartmentEntity department, RedirectAttributes attr, @RequestParam("nombre") String nombre, @RequestParam("jefe")
-            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto) {
+    public String guardarDepartment(DepartmentEntity department, RedirectAttributes attr,, @RequestParam("nombre") String nombre ) {
         department.setDepartmentname(nombre);
 
+
+////enviar lista de emppleados como atributos a vista
+        ////enviar lista de location como atributos a vista
         if (department.getDepartmentid() == 0) {
             List<DepartmentEntity> list = departmentRepository.findAll(Sort.by("departmentid").descending());
             DepartmentEntity ultimoDepartment = list.get(0);

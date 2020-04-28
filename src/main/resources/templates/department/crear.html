@@ -16,8 +16,13 @@
         <input name="nombre" type="text" class="form-control" id="nombre">
     </div>
     <div class="form-group">
-        <label for="jefe">Tipo</label>
-        <input name="jefe" type="text" class="form-control" id="jefe">
+        <select class="form-control" name="manager" id="manager">
+            <option th:each="manager : ${listaSuppliers}"
+                    th:value="${supplier.id}"
+                    th:text="${supplier.companyname}"
+                    th:selected="${supplier.id == product.supplier.id}">
+            </option>>
+        </select>
     </div>
     <div class="form-group">
         <label for="ubicacion">Precio</label>
