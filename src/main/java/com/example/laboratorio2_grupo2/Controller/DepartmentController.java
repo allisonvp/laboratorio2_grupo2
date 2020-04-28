@@ -44,7 +44,7 @@ public class DepartmentController {
                                    Model model){
         Optional<DepartmentEntity> opt = departmentRepository.findById(id);
         if(opt.isPresent()){
-            DepartmentEntity     departmentEditar = opt.get();
+            DepartmentEntity  departmentEditar = opt.get();
             model.addAttribute("departmentEditar", departmentEditar);
             return "department/editar";
         }else{
@@ -62,6 +62,7 @@ public class DepartmentController {
         return "redirect:/department";
 
     }
+
 
 
 
