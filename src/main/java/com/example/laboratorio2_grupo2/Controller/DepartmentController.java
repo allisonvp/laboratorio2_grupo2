@@ -16,29 +16,51 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value="/department")
+@RequestMapping(value = "/department")
 public class DepartmentController {
 
     @Autowired
     DepartmentRepository departmentRepository;
 
     @GetMapping(value = "/lista")
-    public String listaDepartments(Model model){
+    public String listaDepartments(Model model) {
 
         List<DepartmentEntity> listaDepartments = departmentRepository.findAll();
         model.addAttribute("lista", listaDepartments);
         return "department/lista";
     }
 
-    @PostMapping(value = "buscarDepartamento")
-    public String buscarTransportista(@RequestParam("searchField") String searchField,
-                                      Model model){
-        List<DepartmentEntity> listaDepartments = departmentRepository.findByDepartmentname(searchField);
-        model.addAttribute("lista", listaDepartments);
-        model.addAttribute("searchField",searchField);
-        return "department/lista";
+    @GetMapping(value = "/nuevo")
+    public String nuevoDepartment() {
+
+        return "department/crear";
     }
 
+    @PostMapping(value = "/guardar")
+    public String guardarDepartment(DepartmentEntity department, RedirectAttributes attr, @RequestParam("nombre") String nombre, @RequestParam("jefe")
+            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto) {
+        department.setDepartmentname(nombre);
+
+        if (department.getDepartmentid() == 0) {
+            List<DepartmentEntity> list = departmentRepository.findAll(Sort.by("departmentid").descending());
+            DepartmentEntity ultimoDepartment = list.get(0);
+            department.setDepartmentid(ultimoDepartment.getDepartmentid() + 10);
+            attr.addFlashAttribute("msg", "Departamento creado exitosamente");
+        } else {
+            attr.addFlashAttribute("msg", "Departamento " + department.getDepartmentname() + " actualizado exitosamente");
+        }
+        departmentRepository.save(department);
+        return "redirect:/department";
+    }
+
+    @PostMapping(value = "buscarDepartamento")
+    public String buscarTransportista(@RequestParam("searchField") String searchField,
+                                      Model model) {
+        List<DepartmentEntity> listaDepartments = departmentRepository.findByDepartmentname(searchField);
+        model.addAttribute("lista", listaDepartments);
+        model.addAttribute("searchField", searchField);
+        return "department/lista";
+    }
 
 
 }
