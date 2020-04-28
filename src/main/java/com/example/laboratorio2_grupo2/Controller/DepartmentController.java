@@ -62,5 +62,29 @@ public class DepartmentController {
         return "department/lista";
     }
 
+    @GetMapping("/editar")
+    public String editarDepartment(@RequestParam("id") int id,
+                                   Model model){
+        Optional<DepartmentEntity> opt = departmentRepository.findById(id);
+        if(opt.isPresent()){
+            DepartmentEntity     departmentEditar = opt.get();
+            model.addAttribute("departmentEditar", departmentEditar);
+            return "department/editar";
+        }else{
+            return "redirect:/department";
+        }
+
+    }
+
+    @GetMapping("/borrar")
+    public String borrarDepartment(@RequestParam("id") int id){
+        Optional<DepartmentEntity> opt = departmentRepository.findById(id);
+        if (opt.isPresent()){
+            departmentRepository.deleteById(id);
+        }
+        return "redirect:/department";
+
+    }
+
 
 }
