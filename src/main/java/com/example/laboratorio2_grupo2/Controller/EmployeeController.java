@@ -43,7 +43,7 @@ public class EmployeeController {
 
     @PostMapping(value = "/guardar")
     public String guardarDepartment(EmployeeEntity employee, RedirectAttributes attr, @RequestParam("nombre") String nombre, @RequestParam("jefe")
-            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto) {
+            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto, Model model) {
         employee.setFirst_name(nombre);
     @GetMapping("/editar")
     public String editarEmployee(@RequestParam("id") String id,

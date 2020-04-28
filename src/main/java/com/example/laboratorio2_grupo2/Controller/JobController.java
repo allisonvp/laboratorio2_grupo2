@@ -4,11 +4,14 @@ import com.example.laboratorio2_grupo2.Entity.DepartmentEntity;
 import com.example.laboratorio2_grupo2.Entity.JobEntity;
 import com.example.laboratorio2_grupo2.Repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +56,22 @@ public class JobController {
     @GetMapping("/create")
     public String crearJob(){
 
+    }
+    @PostMapping(value = "/guardar")
+    public String guardarDepartment(JobEntity job, RedirectAttributes attr, @RequestParam("nombre") String nombre, @RequestParam("jefe")
+            String jefe, @RequestParam("ubicacion") String ubicacion, @RequestParam("nombrecorto") String nombrecorto) {
+        job.setJobtittle(nombre);
+
+        if (job.getJobid() == 0) {
+            List<JobEntity> list = jobRepository.findAll(Sort.by("departmentid").descending());
+            JobEntity ultimoDepartment = list.get(0);
+            job.setJobid(ultimoDepartment.getJobid() + 10);
+            attr.addFlashAttribute("msg", "Departamento creado exitosamente");
+        } else {
+            attr.addFlashAttribute("msg", "Departamento " + job.getDepartmentname() + " actualizado exitosamente");
+        }
+        jobRepository.save(job);
+        return "redirect:/department";
     }
 
 
