@@ -39,7 +39,12 @@ public class JobController {
             jobRepository.deleteById(id);
         }
         return "redirect:/job";
+    }
 
+    @GetMapping("/create")
+    public String crearJob(){
 
     }
+
+
 }

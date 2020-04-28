@@ -26,10 +26,11 @@ public class EmployeeController {
     public String listarEmployees(Model model) {
         List<EmployeeEntity> listaEmpleados = employeeRepository.findAll();
         List<DepartmentEntity> listaDepartamentos = departmentRepository.findAll();
-
+        model.addAttribute("listaDepartamentos", listaDepartamentos);
         model.addAttribute("listaEmpleados", listaEmpleados);
         return "employee/lista";
     }
+
 
 
 
