@@ -23,7 +23,7 @@
     </tr>
     <tr th:each="j, i:${listaTrabajos}">
         <td th:text="${i.index +1}"></td>
-        <td th:text="${j.jobtitle}""></td>
+        <td th:text="${j.jobtittle}"></td>
         <td th:text="${j.minsalary}"></td>
         <td th:text="${j.maxsalary}"></td>
         <td><a class="btn btn-primary" th:href="@{'/job/edit?id=' + ${j.jobid}}">Editar</a></td>

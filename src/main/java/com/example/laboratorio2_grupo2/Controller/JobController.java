@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -19,6 +20,13 @@ public class JobController {
     @Autowired
     JobRepository jobRepository;
 
+    @GetMapping(value = "/lista")
+    public String listaJob(Model model){
+
+        List<JobEntity> listaTrabajos = jobRepository.findAll();
+        model.addAttribute("listaTrabajos", listaTrabajos);
+        return "job/lista";
+    }
 
     @GetMapping("/editar")
     public String editarJob(@RequestParam("id") String id,
@@ -40,7 +48,12 @@ public class JobController {
             jobRepository.deleteById(id);
         }
         return "redirect:/job";
+    }
 
+    @GetMapping("/create")
+    public String crearJob(){
 
     }
+
+
 }
