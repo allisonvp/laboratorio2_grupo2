@@ -1,9 +1,7 @@
 package com.example.laboratorio2_grupo2.Controller;
 
 import com.example.laboratorio2_grupo2.Entity.DepartmentEntity;
-import com.example.laboratorio2_grupo2.Entity.EmployeeEntity;
 import com.example.laboratorio2_grupo2.Repository.DepartmentRepository;
-import com.example.laboratorio2_grupo2.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -18,55 +16,26 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping(value = "/department")
+@RequestMapping(value="/department")
 public class DepartmentController {
 
     @Autowired
     DepartmentRepository departmentRepository;
 
     @GetMapping(value = "/lista")
-    public String listaDepartments(Model model) {
+    public String listaDepartments(Model model){
 
         List<DepartmentEntity> listaDepartments = departmentRepository.findAll();
         model.addAttribute("lista", listaDepartments);
         return "department/lista";
     }
 
-    @GetMapping(value = "/nuevo")
-    public String nuevoDepartment(Model model) {
-        EmployeeRepository employeeRepository = null;
-        List<EmployeeEntity> listaemployee = employeeRepository.findAll();
-        model.addAttribute("listaemployee",listaemployee);
-
-
-        return "department/crear";
-    }
-
-    @PostMapping(value = "/guardar")
-    public String guardarDepartment(DepartmentEntity department, RedirectAttributes attr,, @RequestParam("nombre") String nombre ) {
-        department.setDepartmentname(nombre);
-
-
-////enviar lista de emppleados como atributos a vista
-        ////enviar lista de location como atributos a vista
-        if (department.getDepartmentid() == 0) {
-            List<DepartmentEntity> list = departmentRepository.findAll(Sort.by("departmentid").descending());
-            DepartmentEntity ultimoDepartment = list.get(0);
-            department.setDepartmentid(ultimoDepartment.getDepartmentid() + 10);
-            attr.addFlashAttribute("msg", "Departamento creado exitosamente");
-        } else {
-            attr.addFlashAttribute("msg", "Departamento " + department.getDepartmentname() + " actualizado exitosamente");
-        }
-        departmentRepository.save(department);
-        return "redirect:/department";
-    }
-
     @PostMapping(value = "buscarDepartamento")
     public String buscarTransportista(@RequestParam("searchField") String searchField,
-                                      Model model) {
+                                      Model model){
         List<DepartmentEntity> listaDepartments = departmentRepository.findByDepartmentname(searchField);
         model.addAttribute("lista", listaDepartments);
-        model.addAttribute("searchField", searchField);
+        model.addAttribute("searchField",searchField);
         return "department/lista";
     }
 
@@ -93,6 +62,8 @@ public class DepartmentController {
         return "redirect:/department";
 
     }
+
+
 
 
 }
