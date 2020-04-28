@@ -19,6 +19,7 @@ public class JobController {
     @Autowired
     JobRepository jobRepository;
 
+
     @GetMapping("/editar")
     public String editarJob(@RequestParam("id") String id,
                                    Model model) {
